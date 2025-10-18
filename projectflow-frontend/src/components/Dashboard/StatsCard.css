@@ -1,0 +1,21 @@
+.stats-card {
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+}
+
+.stats-count {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    /* color is passed via style prop */
+}
+
+.stats-title {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}

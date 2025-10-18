@@ -1,0 +1,184 @@
+/* ProjectFlow: Aurora Theme - Consolidated */
+:root {
+  /* Aurora Theme Colors */
+  --bg-color: #0D0F18; /* Deep, dark navy blue */
+  --glass-bg: rgba(26, 30, 49, 0.65); /* Semi-transparent glass color */
+  --glass-border: rgba(122, 129, 153, 0.2); /* Subtle border for glass elements */
+  --primary-accent: #3A8DFF; /* Vibrant Electric Blue */
+  --secondary-accent: #C45FFF; /* Bright Magenta/Purple */
+  --success-accent: #33FFB5; /* Glowing Teal/Green */
+  --danger-accent: #FF558A; /* Neon Pink/Red */
+  --warning-accent: #FFD60A; /* Bright Yellow */
+
+  /* Text Colors */
+  --text-primary: #F0F2FC; /* Almost white, very light gray */
+  --text-secondary: #A0A8C2; /* Lighter gray for subtitles */
+  --text-muted: #6A718A; /* Muted gray for less important info */
+
+  /* Standard Variables */
+  --border-radius: 12px;
+  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Base Body Styles */
+body {
+  margin: 0;
+  font-family: var(--font-family-sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  background-color: var(--glass-bg);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+
+/* Main App Layout */
+.app-layout {
+  display: flex;
+}
+
+.main-content-area {
+  flex-grow: 1;
+  padding-left: 80px; /* Space for the floating navbar */
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem; /* Padding on sides, no top/bottom */
+}
+
+/* General Elements */
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+a {
+  color: var(--primary-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+a:hover {
+  color: var(--secondary-accent);
+  text-decoration: underline;
+}
+
+/* Glassmorphism Card Style */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 1.5rem; 
+}
+
+/* Button Styles */
+.button-like {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.button-like:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+.button-like:disabled {
+  background-color: var(--text-muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.6;
+}
+.button-like.primary {
+  background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+  color: white;
+}
+.button-like.danger {
+  background-color: var(--danger-accent);
+  color: white;
+}
+.button-like.warning {
+  background-color: var(--warning-accent);
+  color: #1a1a2e; 
+}
+.button-like.success {
+    background-color: var(--success-accent);
+    color: var(--bg-color);
+}
+.button-like.secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--glass-border);
+}
+.button-like.secondary:hover {
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    border-color: var(--primary-accent);
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    background-color: rgba(13, 15, 24, 0.7);
+    color: var(--text-primary);
+    font-size: 1rem;
+    box-sizing: border-box; 
+}
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 15px rgba(58, 141, 255, 0.3);
+}
+
+/* Error Messages */
+.error-message {
+  color: var(--danger-accent);
+  background-color: rgba(255, 85, 138, 0.1);
+  border: 1px solid var(--danger-accent);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  text-align: center;
+}

@@ -1,0 +1,34 @@
+# ==================================
+# General
+# ==================================
+.DS_Store
+*.log
+
+# ==================================
+# IDE files (IntelliJ, VS Code, Eclipse)
+# ==================================
+.idea/
+.vscode/
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ==================================
+# Java / Maven build artifacts
+# ==================================
+/projectflow-backend/target/
+/projectflow-backend/pom.xml.tag
+/projectflow-backend/pom.xml.releaseBackup
+/projectflow-backend/pom.xml.versionsBackup
+/projectflow-backend/release.properties
+
+# ==================================
+# Node.js / React build artifacts
+# ==================================
+/projectflow-frontend/node_modules/
+/projectflow-frontend/build/
+/projectflow-frontend/npm-debug.log*
+/projectflow-frontend/yarn-debug.log*
+/projectflow-frontend/yarn-error.log*

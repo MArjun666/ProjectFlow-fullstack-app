@@ -1,0 +1,35 @@
+.auth-form-container {
+  max-width: 450px;
+  margin: 5rem auto; /* Center vertically and horizontally */
+  padding: 2.5rem;   /* A bit more padding */
+  text-align: center;
+}
+
+.auth-title {
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.auth-form {
+  text-align: left;
+}
+
+.auth-button {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 12px;
+  font-size: 1.1rem;
+}
+
+.auth-switch-link {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.auth-switch-link a {
+  font-weight: 600;
+  color: var(--primary-accent);
+}

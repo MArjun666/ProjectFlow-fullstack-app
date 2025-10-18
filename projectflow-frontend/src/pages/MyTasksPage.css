@@ -1,0 +1,96 @@
+/* Styles for the "My Assigned Tasks" page, updated for the Aurora theme */
+.my-tasks-page .page-title {
+    margin-bottom: 2rem;
+}
+
+.task-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+}
+
+.task-item {
+    padding: 1.5rem 2rem;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.task-header h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* --- Base styles for all status badges --- */
+.task-status-badge, .status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+/* ... (colors for each status are defined below) ... */
+
+.task-project {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0 0 1rem 0;
+}
+
+.task-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.task-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+.task-meta p { margin: 0; }
+.task-meta strong { color: var(--text-primary); }
+
+.task-actions {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.small-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+}
+
+/* --- THIS IS THE "ATTRACTIVE BUTTON" STYLE --- */
+.button-like.success {
+    background: linear-gradient(135deg, var(--success-accent), #2CDA9D); /* Gradient */
+    color: #0D0F18; /* Dark text for contrast */
+    box-shadow: 0 0 15px rgba(51, 255, 181, 0.3); /* Subtle glow */
+    border: none;
+}
+.button-like.success:hover {
+    box-shadow: 0 0 25px rgba(51, 255, 181, 0.5); /* Brighter glow on hover */
+    transform: translateY(-2px);
+}
+
+.task-completed-indicator {
+    color: var(--success-accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+}

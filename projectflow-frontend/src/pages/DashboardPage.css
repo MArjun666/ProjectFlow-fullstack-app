@@ -1,0 +1,54 @@
+.dashboard-container-dark {
+    width: 100%;
+}
+
+.dashboard-main-content-dark {
+    /* --- THIS IS THE KEY CHANGE --- */
+    display: grid;
+    /* The projects section will be twice as wide as the messages section */
+    grid-template-columns: 2fr 1fr;
+    gap: 2.5rem; /* Space between the two columns */
+    margin-top: 2rem;
+    align-items: start; /* Aligns items to the top of the grid cell */
+}
+
+.projects-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.projects-header h2 {
+    font-size: 1.75rem;
+    color: var(--text-primary);
+    margin: 0;
+    font-weight: 600;
+}
+
+.projects-header span {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.project-list-container {
+    margin-top: 1rem;
+}
+
+.project-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}

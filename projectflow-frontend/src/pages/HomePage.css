@@ -1,0 +1,106 @@
+/* src/pages/HomePage.css` (Updated) */
+/**
+ * Stylesheet for the HomePage component, creating the "Aurora" hero section.
+ */
+
+/* Main container to center the content and set up the background effect context. */
+.homepage-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px); /* Full viewport height minus navbar width */
+    padding: 2rem;
+    text-align: center;
+    overflow: hidden; /* Prevents gradients from causing scrollbars */
+    position: relative;
+}
+
+/* Background "aurora" effect using pseudo-elements */
+.homepage-container::before,
+.homepage-container::after {
+    content: '';
+    position: absolute;
+    z-index: -1; /* Place the gradients behind the content */
+    border-radius: 50%;
+    filter: blur(120px); /* Creates the soft, diffused look */
+    opacity: 0.15; /* Makes the effect subtle */
+}
+
+/* Top-left blueish gradient */
+.homepage-container::before {
+    top: -25%;
+    left: -25%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, var(--primary-accent), transparent 70%);
+}
+
+/* Bottom-right purplish gradient */
+.homepage-container::after {
+    bottom: -25%;
+    right: -25%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, var(--secondary-accent), transparent 70%);
+}
+
+/* The main content block in the center of the page. */
+.hero-section {
+    max-width: 800px;
+}
+
+/* The main heading. */
+.hero-title {
+    font-size: clamp(2.5rem, 6vw, 4rem); /* Responsive font size */
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+    color: var(--text-primary);
+}
+
+/* The class for text that gets the gradient effect. */
+.gradient-text {
+    background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
+    -webkit-background-clip: text; /* Required for gradient text effect */
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+/* The tagline paragraph below the main heading. */
+.hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 2.5rem auto;
+    line-height: 1.6;
+}
+
+/* Container for the call-to-action buttons. */
+.hero-cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap; /* Allows buttons to stack on small screens */
+}
+
+/* Larger button style for the hero section */
+.large-button {
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Secondary "ghost" button style */
+.button-like.secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--glass-border);
+}
+.button-like.secondary:hover {
+    background: var(--glass-bg);
+    border-color: var(--primary-accent);
+    color: var(--text-primary);
+}
+
+    

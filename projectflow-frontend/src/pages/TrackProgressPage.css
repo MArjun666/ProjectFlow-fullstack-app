@@ -1,0 +1,167 @@
+/* Styles for the main Track Progress page container */
+.track-progress-page .intro-section p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.project-progress-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.project-progress-item {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    border: 1px solid var(--glass-border);
+}
+.project-progress-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(58, 141, 255, 0.15);
+    border-color: rgba(58, 141, 255, 0.4);
+}
+
+.progress-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+.progress-item-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.project-description-tp {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.overall-progress-section {
+    margin-bottom: 1rem;
+}
+.overall-progress-section .progress-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+.progress-bar-container {
+    width: 100%;
+    background-color: var(--glass-border);
+    border-radius: 6px;
+    height: 20px;
+    overflow: hidden;
+}
+.progress-bar {
+    height: 100%;
+    background-color: var(--success-accent);
+    color: var(--bg-color);
+    text-align: center;
+    line-height: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 6px;
+    transition: width 0.5s ease-in-out;
+}
+.progress-bar[style*="width: 0%"] { background-color: transparent; }
+
+.task-count-summary {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    text-align: right;
+}
+
+.expand-indicator {
+    font-size: 0.85rem;
+    color: var(--primary-accent);
+    text-align: right;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+.expanded-project-details {
+    padding: 1.5rem;
+    border-top: 2px solid var(--primary-accent);
+}
+.expanded-project-details h4 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--primary-accent);
+    font-size: 1.2rem;
+}
+.loading-details-message {
+    padding: 1rem;
+    text-align: center;
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+.team-member-progress-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+.team-member-progress-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.member-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+.member-avatar-small {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: 12px;
+    border: 1px solid var(--glass-border);
+    object-fit: cover;
+}
+.member-name {
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+.member-role-badge {
+    font-size: 0.7rem;
+    background-color: var(--glass-border);
+    color: var(--text-muted);
+    padding: 3px 7px;
+    border-radius: 4px;
+    margin-left: 10px;
+    text-transform: capitalize;
+}
+
+.member-task-count {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    margin-left: 40px;
+}
+
+.small-progress-bar-container {
+    height: 16px;
+    margin-left: 40px;
+}
+.small-progress-bar {
+    line-height: 16px;
+    font-size: 0.7rem;
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+}

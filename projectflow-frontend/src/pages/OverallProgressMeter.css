@@ -1,0 +1,62 @@
+.progress-meter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.progress-meter-svg {
+    width: 150px;
+    height: 150px;
+    transform: rotate(-90deg); /* Start the circle from the top */
+}
+
+.meter-track,
+.meter-progress {
+    fill: none;
+    stroke-width: 10;
+}
+
+.meter-track {
+    stroke: var(--glass-border); /* The faint background circle */
+}
+
+.meter-progress {
+    stroke: var(--success-accent); /* The green progress arc */
+    stroke-linecap: round; /* Makes the end of the arc rounded */
+    transition: stroke-dashoffset 0.5s ease-out;
+}
+
+/* --- Text Styling --- */
+.meter-percent {
+    font-size: 28px;
+    font-weight: 700;
+    fill: var(--text-primary);
+    text-anchor: middle;
+    transform: rotate(90deg) translate(0, -120px); /* Counter-rotate the text */
+}
+
+.meter-tasks {
+    font-size: 14px;
+    font-weight: 500;
+    text-anchor: middle;
+    transform: rotate(90deg) translate(0, -120px); /* Counter-rotate the text */
+}
+
+.meter-tasks-completed {
+    fill: var(--success-accent);
+}
+
+.meter-tasks-divider {
+    fill: var(--text-muted);
+}
+
+.meter-tasks-total {
+    fill: var(--text-secondary);
+}
+
+.meter-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}

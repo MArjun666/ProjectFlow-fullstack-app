@@ -1,0 +1,110 @@
+.project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block; /* Ensures the link takes up the full space */
+}
+
+.project-card {
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%; /* Make cards in a grid have the same height */
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.card-body {
+    flex-grow: 1; /* Pushes the footer to the bottom */
+}
+
+.project-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+    color: var(--text-primary);
+}
+
+.project-card-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0 0 1.5rem 0;
+}
+
+.progress-section {
+    margin-bottom: 1rem;
+}
+
+.progress-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.progress-bar-background {
+    background-color: var(--glass-border);
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar-foreground {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; /* Pushes footer to bottom */
+}
+
+.card-avatars {
+    display: flex;
+}
+
+.card-avatars img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-color);
+    margin-left: -8px;
+}
+.card-avatars img:first-child { margin-left: 0; }
+
+.avatar-plus {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--glass-border);
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-left: -8px;
+}
+
+.days-left-tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+}
