@@ -1,6 +1,16 @@
 # ProjectFlow - Full-Stack Project Management App
 
-![ProjectFlow Dashboard](https://i.imgur.com/![alt text](image.png).png) 
+
+| Dashboard |
+|:---:|
+|<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/de257f01-3245-47a9-9118-69f6759cbd0f" />
+| Project Section & Creating Project through button |
+|<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2ea19f8d-7827-4c9d-a3ab-e9f6f8454ab5" />
+| List of Assigned Tasks |
+|<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e26402b5-7fb2-465d-add9-54d48f8ec2a5" />
+| Project Tracking & User Task Tracking |
+|<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/568701b3-b59b-4a40-bd95-32f1d5bc4f90" />
+eed6506469765a954dfaadea5d43b96567e864ef
 
 ---
 
@@ -84,4 +94,9 @@ spring.data.mongodb.uri=mongodb://localhost:27017/projectflow_db
 
 # JWT secret key and expiration time
 jwt.secret=ThisIsASuperLongAndVerySecureSecretKeyForJWTAuthenticationInProjectFlow12345
+
+HEAD
 jwt.expiration.ms=86400000
+
+jwt.expiration.ms=86400000
+eed6506469765a954dfaadea5d43b96567e864ef
