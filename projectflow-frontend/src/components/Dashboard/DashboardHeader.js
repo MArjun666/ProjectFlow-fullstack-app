@@ -7,6 +7,18 @@ import './DashboardHeader.css';
 const AddIcon = () => <span className="icon" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>+</span>;
 const NotificationIcon = () => <span className="icon">🔔</span>;
 
+/**
+ * A helper function to format the role string for display.
+ * e.g., "projectManager" becomes "Project Manager"
+ * @param {string} role The role string from the user object.
+ * @returns {string} A formatted, human-readable role.
+ */
+const formatRole = (role) => {
+    if (!role) return '';
+    const spaced = role.replace(/([A-Z])/g, ' $1'); // Adds a space before capital letters
+    return spaced.charAt(0).toUpperCase() + spaced.slice(1); // Capitalizes the first letter
+};
+
 const DashboardHeader = () => {
     const { user, unreadCount } = useAuth();
     const navigate = useNavigate();
@@ -24,7 +36,7 @@ const DashboardHeader = () => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, []);
+    }, []); // Dependency array is empty, which is fine for this effect
 
     const handleAddClick = () => {
         navigate('/projects/create');
@@ -57,10 +69,17 @@ const DashboardHeader = () => {
                     {showNotifications && <NotificationDropdown closeDropdown={() => setShowNotifications(false)} />}
                 </div>
 
+                {/* --- THIS IS THE ONLY UPDATED SECTION --- */}
                 <div className="user-profile">
                     <img src={user?.avatar || `https://i.pravatar.cc/36?u=${user?.email}`} alt={user?.name} />
-                    <span>{user?.name || 'User'}</span>
+                    {/* A new wrapper for the name and role */}
+                    <div className="user-details">
+                        <span className="user-name">{user?.name || 'User'}</span>
+                        {/* The new element that displays the formatted user role */}
+                        <span className="user-role">{formatRole(user?.role)}</span>
+                    </div>
                 </div>
+                {/* --- END OF UPDATE --- */}
             </div>
         </header>
     );

@@ -1,38 +1,50 @@
-.App {
-  text-align: center;
-}
+/**
+ * Main layout styles for the ProjectFlow application.
+ * This file defines the core structure for the sidebar and main content area.
+ */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* The main container for the entire application when a user is logged in.
+   It uses flexbox to place the Navbar (sidebar) and the main content side-by-side. */
+.app-layout {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* --- THIS IS THE CRITICAL FIX --- */
+/* The main content area that holds all the page components (like the Dashboard). */
+.main-content {
+  flex-grow: 1; /* Allows this area to take up all available horizontal space. */
+  
+  /* Adds padding on the left to make space for the 80px wide fixed sidebar.
+     This pushes the content to the right, making the sidebar visible. */
+  padding-left: 80px; 
+  
+  /* Adds consistent spacing on the other sides of the content. */
+  padding-right: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  
+  box-sizing: border-box;
+}
+/* --- END OF FIX --- */
+
+
+/* A special layout for pages that should be centered on the screen,
+   such as the Login and Register pages, which do not have a sidebar. */
+.centered-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* A simple style for the initial loading message. */
+.loading-fullscreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    background-color: var(--bg-color);
 }

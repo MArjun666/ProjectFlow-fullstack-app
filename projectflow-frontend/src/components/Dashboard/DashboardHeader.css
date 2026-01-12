@@ -1,9 +1,17 @@
+/**
+ * Styles for the DashboardHeader component (Dark Theme).
+ * This file styles the entire top bar of the dashboard.
+ */
+
+/* Main container for the header, using flexbox to align items */
 .dashboard-header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 1.5rem; /* Optional: adds space below the header */
 }
 
+/* The "Dashboard" title on the left */
 .portfolio-title {
     font-size: 2rem;
     font-weight: 600;
@@ -11,12 +19,14 @@
     color: var(--text-primary);
 }
 
+/* Container for all the controls on the right (search, buttons, profile) */
 .header-controls {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
+/* Styling for the search bar input field */
 .search-bar input {
     background-color: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -34,6 +44,7 @@
     box-shadow: 0 0 10px rgba(58, 141, 255, 0.2);
 }
 
+/* General style for the circular buttons */
 .control-button {
     background-color: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -46,17 +57,19 @@
     align-items: center;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    position: relative;
+    position: relative; /* Needed for the notification badge */
 }
 
 .control-button:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Styles the icon (e.g., '+', '🔔') inside the button */
 .control-button .icon {
     font-size: 1.2rem;
 }
 
+/* Specific style for the "Add" button to give it a primary color */
 .add-button {
     background-color: var(--primary-accent);
     color: white;
@@ -64,15 +77,14 @@
 }
 
 .add-button:hover {
-    filter: brightness(1.2);
+    filter: brightness(1.2); /* Make it slightly brighter on hover */
 }
 
+/* Container for the user's avatar and name/role */
 .user-profile {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-weight: 500;
-    color: var(--text-primary);
 }
 
 .user-profile img {
@@ -83,10 +95,31 @@
     border: 2px solid var(--glass-border);
 }
 
+/* New container for the vertically aligned name and role */
+.user-details {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: capitalize; /* e.g., 'projectManager' -> 'Projectmanager' */
+}
+
+/* Container for the notification button and its dropdown */
 .notification-container {
     position: relative;
 }
 
+/* The red badge that shows the unread notification count */
 .notification-badge {
     position: absolute;
     top: -2px;
@@ -101,5 +134,6 @@
     align-items: center;
     font-size: 0.7rem;
     font-weight: 700;
+    /* Creates a "cutout" effect against the dark page background */
     border: 2px solid var(--bg-color);
 }

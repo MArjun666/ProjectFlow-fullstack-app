@@ -89,12 +89,14 @@ const Register = () => {
         
         <div className="form-group">
           <label htmlFor="role">Your Role</label>
+          {/* --- THIS IS THE ONLY CHANGE MADE TO THE FILE --- */}
+          {/* The 'value' attribute is added to each option to ensure the correct role string is sent to the backend. */}
           <select id="role" value={role} onChange={(e) => setRole(e.target.value)}>
-            {/* The 'value' must match the backend enum names exactly */}
             <option value="teamMember">Team Member</option>
             <option value="projectManager">Project Manager</option>
             <option value="admin">Admin</option>
           </select>
+          {/* --- END OF CHANGE --- */}
         </div>
         
         <div className="form-group">

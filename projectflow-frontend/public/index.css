@@ -73,7 +73,7 @@ a {
 }
 a:hover {
   color: var(--secondary-accent);
-  text-decoration: underline;
+  text-decoration:none;
 }
 
 /* Glassmorphism Card Style */

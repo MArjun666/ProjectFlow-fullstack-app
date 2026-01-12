@@ -84,6 +84,10 @@
     flex-wrap: wrap; /* Allows buttons to stack on small screens */
 }
 
+.hero-cta-buttons:hover{
+    text-decoration: none;
+}
+
 /* Larger button style for the hero section */
 .large-button {
     padding: 14px 28px;
