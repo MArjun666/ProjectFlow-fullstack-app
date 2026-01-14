@@ -10,7 +10,6 @@
 |<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e26402b5-7fb2-465d-add9-54d48f8ec2a5" />
 | Project Tracking & User Task Tracking |
 |<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/568701b3-b59b-4a40-bd95-32f1d5bc4f90" />
-eed6506469765a954dfaadea5d43b96567e864ef
 
 ---
 
