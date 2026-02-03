@@ -4,15 +4,15 @@
     left: 0;
     width: 80px;
     height: 100vh;
-    background: var(--glass-bg);
+    background: rgba(13, 15, 24, 0.98); /* Solid dark for visibility */
     border-right: 1px solid var(--glass-border);
-    -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 0;
+    /* Pushes content away from very top and very bottom */
+    padding: 2rem 0; 
+    box-sizing: border-box;
     z-index: 1000;
 }
 
@@ -59,38 +59,43 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1rem; /* Space between avatar and exit button */
+    /* Pushes the icons slightly up from the very bottom edge */
+    margin-bottom: 1rem; 
 }
 
-.user-avatar-container {
-    cursor: default; /* Make it not look clickable */
-    margin-bottom: 1rem;
-}
 .user-avatar-container:hover {
     background-color: transparent; /* No hover effect */
 }
 
+.user-avatar-container {
+    margin-bottom: 0.5rem;
+}
+
 .user-avatar {
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    object-fit: cover;
     border: 2px solid var(--primary-accent);
+    transition: transform 0.3s ease;
 }
 
 .logout-button {
-    background: none;
-    border: none;
-    width: 50px;
-    height: 50px;
+    background: rgba(255, 85, 138, 0.1); /* Subtle red tint */
+    border: 1px solid rgba(255, 85, 138, 0.3);
+    width: 45px;
+    height: 45px;
     border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    color: var(--danger-accent);
 }
+
 
 .logout-button:hover {
     background-color: var(--danger-accent) !important;
-    color: white;
+    color: white !important;
 }

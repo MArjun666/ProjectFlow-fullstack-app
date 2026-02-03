@@ -10,7 +10,6 @@ const ProjectDetailPage = () => {
     const { user } = useAuth();
     const [project, setProject] = useState(null);
     const [assignableUsers, setAssignableUsers] = useState([]);
-    const [userToAssign, setUserToAssign] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -20,7 +19,8 @@ const ProjectDetailPage = () => {
             const projectData = await projectService.getProjectById(projectId);
             setProject(projectData);
 
-            if (user && (user.role === 'admin' || user._id === projectData.projectManager?._id)) {
+            // FIX: Allow PMs to see the list of users they can add to the project
+            if (user && (user.role === 'admin' || user.role === 'projectManager')) {
                 const usersData = await projectService.getAssignableUsers();
                 setAssignableUsers(usersData);
             }
@@ -47,11 +47,16 @@ const ProjectDetailPage = () => {
         setProject(prev => ({ ...prev, tasks: prev.tasks.filter(t => t._id !== taskId) }));
     };
 
-    if (loading) return <div className="container"><p>Loading project details...</p></div>;
+    if (loading) return <div className="container"><p>Loading details...</p></div>;
     if (error) return <div className="container error-message">{error}</div>;
     if (!project) return <div className="container"><p>Project not found.</p></div>;
 
-    const canManageProject = user && (user.role === 'admin' || user._id === project.projectManager?._id);
+    // FIX: Consistent permission check for the whole page
+    const canManageProject = user && (
+        user.role === 'admin' || 
+        user.role === 'projectManager' || 
+        user._id === project.projectManager?._id
+    );
 
     return (
         <div className="container project-detail-page">
@@ -71,22 +76,14 @@ const ProjectDetailPage = () => {
     );
 };
 
-// Sub-components for better organization
-const ProjectOverview = ({ project }) => (
-    <section className="page-section glass-card">
-        <h3 className="section-title">Project Overview</h3>
-        <p className="project-description-detail">{project.description}</p>
-        <div className="project-meta-grid">
-            <div className="meta-item"><strong>Status</strong><span className={`status-badge status-${project.status.toLowerCase().replace(/_/g, '-')}`}>{project.status.replace(/_/g, ' ')}</span></div>
-            <div className="meta-item"><strong>Start Date</strong><span>{project.startDate ? new Date(project.startDate).toLocaleDateString() : 'N/A'}</span></div>
-            <div className="meta-item"><strong>End Date</strong><span>{project.endDate ? new Date(project.endDate).toLocaleDateString() : 'N/A'}</span></div>
-            <div className="meta-item"><strong>Manager</strong><span>{project.projectManager?.name || 'N/A'}</span></div>
-        </div>
-    </section>
-);
-
 const TeamMembers = ({ project, canManage, assignableUsers, onUpdate }) => {
     const [userToAssign, setUserToAssign] = useState('');
+
+    // FIX: Unique members filter to prevent multiple "Mahesh" entries
+    const uniqueMembers = project.teamMembers?.reduce((acc, current) => {
+        if (!acc.find(item => item._id === current._id)) acc.push(current);
+        return acc;
+    }, []) || [];
 
     const handleAddMember = async (e) => {
         e.preventDefault();
@@ -95,24 +92,24 @@ const TeamMembers = ({ project, canManage, assignableUsers, onUpdate }) => {
             const updatedProject = await projectService.addMemberToProject(project._id, userToAssign);
             onUpdate(updatedProject);
             setUserToAssign('');
-        } catch (err) { alert(`Failed to add member: ${err.message}`); }
+        } catch (err) { alert(`Failed: ${err.message}`); }
     };
 
     const handleRemoveMember = async (memberId) => {
-        if (!window.confirm("Are you sure? This will unassign them from their tasks.")) return;
+        if (!window.confirm("Are you sure?")) return;
         try {
             const updatedProject = await projectService.removeMemberFromProject(project._id, memberId);
             onUpdate(updatedProject);
-        } catch (err) { alert(`Failed to remove member: ${err.message}`); }
+        } catch (err) { alert(`Failed: ${err.message}`); }
     };
     
-    const availableUsersToAdd = assignableUsers.filter(u => !project.teamMembers.some(tm => tm._id === u._id));
+    const availableUsersToAdd = assignableUsers.filter(u => !uniqueMembers.some(tm => tm._id === u._id));
 
     return (
         <section className="page-section glass-card">
-            <h3 className="section-title">Team Members ({project.teamMembers?.length || 0})</h3>
+            <h3 className="section-title">Team Members ({uniqueMembers.length})</h3>
             <ul className="team-member-list">
-                {project.teamMembers?.map(member => (
+                {uniqueMembers.map(member => (
                     <li key={member._id} className="team-member-item">
                         <div className="member-info">
                             <img src={member.avatar || `https://i.pravatar.cc/32?u=${member.email}`} alt={member.name} className="member-avatar" />
@@ -139,20 +136,24 @@ const TeamMembers = ({ project, canManage, assignableUsers, onUpdate }) => {
 };
 
 const ProjectTasks = ({ project, canManage, onTaskCreated, onTaskDeleted }) => {
+    // FIX: Use unique members for the task assignment dropdown
+    const uniqueTeamMembers = project.teamMembers?.reduce((acc, current) => {
+        if (!acc.find(item => item._id === current._id)) acc.push(current);
+        return acc;
+    }, []) || [];
+
     const handleTaskDelete = async (taskId) => {
-        if (!window.confirm("Are you sure you want to delete this task?")) return;
+        if (!window.confirm("Delete this task?")) return;
         try {
             await projectService.deleteTask(project._id, taskId);
             onTaskDeleted(taskId);
-        } catch (err) {
-            alert(`Failed to delete task: ${err.message}`);
-        }
+        } catch (err) { alert(`Error: ${err.message}`); }
     };
     
     return (
         <section className="page-section">
             <h2 className="section-title full-width">Project Tasks ({project.tasks?.length || 0})</h2>
-            {canManage && <CreateTaskForm projectId={project._id} assignableUsers={project.teamMembers} onTaskCreated={onTaskCreated} />}
+            {canManage && <CreateTaskForm projectId={project._id} assignableUsers={uniqueTeamMembers} onTaskCreated={onTaskCreated} />}
             {project.tasks?.length > 0 ? (
                 <ul className="task-list-ul">
                     {project.tasks.map(task => (
@@ -175,7 +176,7 @@ const ProjectTasks = ({ project, canManage, onTaskCreated, onTaskDeleted }) => {
                     ))}
                 </ul>
             ) : (
-                <p className="glass-card" style={{padding: '1.5rem', textAlign: 'center'}}>No tasks have been created for this project yet.</p>
+                <p className="glass-card" style={{padding: '1.5rem', textAlign: 'center'}}>No tasks created yet.</p>
             )}
         </section>
     );
@@ -196,7 +197,7 @@ const CreateTaskForm = ({ projectId, assignableUsers, onTaskCreated }) => {
             const newTask = await projectService.createTask(projectId, { title, description, assignedTo, dueDate });
             onTaskCreated(newTask);
             setTitle(''); setDescription(''); setAssignedTo(''); setDueDate('');
-        } catch (err) { setError(err.message); }
+        } catch (err) { setError(err.response?.data?.message || err.message); }
     };
 
     return (
@@ -206,12 +207,33 @@ const CreateTaskForm = ({ projectId, assignableUsers, onTaskCreated }) => {
             <div className="form-group"><label>Title</label><input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required /></div>
             <div className="form-group"><label>Description</label><textarea value={description} onChange={(e) => setDescription(e.target.value)} /></div>
             <div className="form-grid">
-                <div className="form-group"><label>Assign To</label><select value={assignedTo} onChange={(e) => setAssignedTo(e.target.value)}><option value="">-- Unassigned --</option>{assignableUsers.map(user => (<option key={user._id} value={user._id}>{user.name}</option>))}</select></div>
+                <div className="form-group">
+                    <label>Assign To</label>
+                    <select value={assignedTo} onChange={(e) => setAssignedTo(e.target.value)}>
+                        <option value="">-- Unassigned --</option>
+                        {assignableUsers.map(user => (
+                            <option key={user._id} value={user._id}>{user.name}</option>
+                        ))}
+                    </select>
+                </div>
                 <div className="form-group"><label>Due Date</label><input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} /></div>
             </div>
             <button type="submit" className="button-like primary">Add Task</button>
         </form>
     );
 };
+
+const ProjectOverview = ({ project }) => (
+    <section className="page-section glass-card">
+        <h3 className="section-title">Project Overview</h3>
+        <p className="project-description-detail">{project.description}</p>
+        <div className="project-meta-grid">
+            <div className="meta-item"><strong>Status</strong><span className={`status-badge status-${project.status.toLowerCase().replace(/_/g, '-')}`}>{project.status.replace(/_/g, ' ')}</span></div>
+            <div className="meta-item"><strong>Start Date</strong><span>{project.startDate ? new Date(project.startDate).toLocaleDateString() : 'N/A'}</span></div>
+            <div className="meta-item"><strong>End Date</strong><span>{project.endDate ? new Date(project.endDate).toLocaleDateString() : 'N/A'}</span></div>
+            <div className="meta-item"><strong>Manager</strong><span>{project.projectManager?.name || 'N/A'}</span></div>
+        </div>
+    </section>
+);
 
 export default ProjectDetailPage;

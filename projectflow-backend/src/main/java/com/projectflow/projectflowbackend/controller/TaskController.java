@@ -24,10 +24,12 @@ public class TaskController {
 
         @GetMapping("/mytasks")
         public ResponseEntity<List<MyTaskResponse>> getMyTasks(@AuthenticationPrincipal User currentUser) {
-                ObjectId userObjectId = new ObjectId(currentUser.getId());
-                List<Project> userProjects = projectRepository.findProjectsByUserId(userObjectId);
+                // Use the currentUser directly instead of converting to ObjectId
+                List<Project> userProjects = projectRepository.findByUserOrProjectManagerOrTeamMembersContaining(
+                                currentUser, currentUser, currentUser);
 
                 List<MyTaskResponse> myTasks = userProjects.stream()
+                                .filter(project -> project.getTasks() != null) // Safety check
                                 .flatMap(project -> project.getTasks().stream()
                                                 .filter(task -> task.getAssignedTo() != null
                                                                 && task.getAssignedTo().getId()

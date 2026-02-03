@@ -1,110 +1,105 @@
-/* src/pages/HomePage.css` (Updated) */
 /**
- * Stylesheet for the HomePage component, creating the "Aurora" hero section.
+ * src/pages/HomePage.css
+ * CLEAN TWO-COLOR GRADIENT - NO SQUARES - FIXED LAYOUT
  */
 
-/* Main container to center the content and set up the background effect context. */
 .homepage-container {
+    /* Locks the page to the screen size to prevent scrolling */
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 80px); /* Full viewport height minus navbar width */
-    padding: 2rem;
-    text-align: center;
-    overflow: hidden; /* Prevents gradients from causing scrollbars */
-    position: relative;
+    justify-content: center; /* Centers horizontally in the workspace */
+    align-items: center;     /* Centers vertically */
+    
+    /* TWO-COLOR GRADIENT ONLY: Deep Navy to a soft Midnight Blue */
+    background: linear-gradient(135deg, #0D0F18 0%, #161A29 100%);
+    
+    /* Accounts for the 80px navbar to ensure text is visually centered */
+    padding-left: 80px; 
+    margin: 0;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
-/* Background "aurora" effect using pseudo-elements */
-.homepage-container::before,
-.homepage-container::after {
-    content: '';
-    position: absolute;
-    z-index: -1; /* Place the gradients behind the content */
-    border-radius: 50%;
-    filter: blur(120px); /* Creates the soft, diffused look */
-    opacity: 0.15; /* Makes the effect subtle */
-}
+/* Removed ::before and ::after to keep the background as a pure gradient */
 
-/* Top-left blueish gradient */
-.homepage-container::before {
-    top: -25%;
-    left: -25%;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(circle, var(--primary-accent), transparent 70%);
-}
-
-/* Bottom-right purplish gradient */
-.homepage-container::after {
-    bottom: -25%;
-    right: -25%;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(circle, var(--secondary-accent), transparent 70%);
-}
-
-/* The main content block in the center of the page. */
 .hero-section {
+    position: relative;
+    z-index: 10;
     max-width: 800px;
+    width: 100%;
+    
+    /* FORCED TRANSPARENCY: Removes the 'Square' look from the container */
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-/* The main heading. */
+/* Title - Refined and Professional Size */
 .hero-title {
-    font-size: clamp(2.5rem, 6vw, 4rem); /* Responsive font size */
+    /* 3.2rem is the professional standard for high-end landing pages */
+    font-size: 3.2rem; 
     font-weight: 700;
     line-height: 1.2;
-    margin: 0 0 1.5rem 0;
+    margin-bottom: 1.2rem;
     color: var(--text-primary);
+    letter-spacing: -1.5px;
 }
 
-/* The class for text that gets the gradient effect. */
+/* Gradient Text - Softer shades for a premium feel */
 .gradient-text {
-    background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
-    -webkit-background-clip: text; /* Required for gradient text effect */
+    background: linear-gradient(90deg, #3A8DFF, #C45FFF);
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
 }
 
-/* The tagline paragraph below the main heading. */
+/* Subtitle - Clean and readable */
 .hero-subtitle {
-    font-size: clamp(1rem, 2vw, 1.1rem);
-    color: var(--text-secondary);
+    font-size: 1.1rem;
+    color: #A0A8C2; /* Softer gray */
     max-width: 600px;
-    margin: 0 auto 2.5rem auto;
-    line-height: 1.6;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    font-weight: 400;
 }
 
-/* Container for the call-to-action buttons. */
+/* CTA Buttons - Alignment and Underline Fix */
 .hero-cta-buttons {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap; /* Allows buttons to stack on small screens */
 }
 
-.hero-cta-buttons:hover{
-    text-decoration: none;
+.hero-cta-buttons a {
+    text-decoration: none !important; /* Ensure no underlines appear */
 }
 
-/* Larger button style for the hero section */
+/* Button - Professional Padding and Soft Glow */
 .large-button {
-    padding: 14px 28px;
+    padding: 14px 36px;
     font-size: 1rem;
     font-weight: 600;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(58, 141, 255, 0.3);
 }
 
-/* Secondary "ghost" button style */
-.button-like.secondary {
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--glass-border);
+.large-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(58, 141, 255, 0.45);
 }
-.button-like.secondary:hover {
-    background: var(--glass-bg);
-    border-color: var(--primary-accent);
-    color: var(--text-primary);
-}
-
-    

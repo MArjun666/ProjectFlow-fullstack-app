@@ -38,7 +38,10 @@ public class ProjectService {
     }
 
     public List<ProjectResponse> getProjectsForUser(User currentUser) {
-        return projectRepository.findProjectsByUserId(new ObjectId(currentUser.getId()))
+        // We pass the same user object to all three fields to check if they are the
+        // creator, PM, or a member
+        return projectRepository
+                .findByUserOrProjectManagerOrTeamMembersContaining(currentUser, currentUser, currentUser)
                 .stream()
                 .map(ProjectResponse::new)
                 .collect(Collectors.toList());
@@ -66,20 +69,23 @@ public class ProjectService {
         User projectManager = findUserById(req.getProjectManager());
         project.setProjectManager(projectManager);
 
-        Set<User> teamMembersSet = new HashSet<>();
-        teamMembersSet.add(currentUser);
-        teamMembersSet.add(projectManager);
+        // --- FIX: Use a Set of Strings (IDs) to guarantee uniqueness ---
+        Set<String> uniqueUserIds = new HashSet<>();
+        uniqueUserIds.add(currentUser.getId());
+        uniqueUserIds.add(projectManager.getId());
 
-        List<User> initialMembers = new ArrayList<>();
-        if (req.getTeamMembers() != null && !req.getTeamMembers().isEmpty()) {
-            initialMembers = userRepository.findAllById(req.getTeamMembers());
-            teamMembersSet.addAll(initialMembers);
+        if (req.getTeamMembers() != null) {
+            uniqueUserIds.addAll(req.getTeamMembers());
         }
-        project.setTeamMembers(new ArrayList<>(teamMembersSet));
+
+        // Fetch all unique users in one batch
+        List<User> finalMembers = userRepository.findAllById(uniqueUserIds);
+        project.setTeamMembers(finalMembers);
 
         Project savedProject = projectRepository.save(project);
 
-        for (User member : initialMembers) {
+        // Notification logic remains the same...
+        for (User member : finalMembers) {
             if (!member.getId().equals(currentUser.getId())) {
                 createAndSaveNotification(
                         currentUser, member, savedProject, null, NotificationType.generic,
@@ -105,11 +111,14 @@ public class ProjectService {
         }
 
         if (req.getTeamMembers() != null) {
-            project.setTeamMembers(userRepository.findAllById(req.getTeamMembers()));
+            // --- FIX: Ensure unique IDs here too ---
+            Set<String> uniqueIds = new HashSet<>(req.getTeamMembers());
+            if (project.getProjectManager() != null)
+                uniqueIds.add(project.getProjectManager().getId());
+            project.setTeamMembers(userRepository.findAllById(uniqueIds));
         }
 
         updateProjectFieldsFromRequest(project, req);
-
         return new ProjectResponse(projectRepository.save(project));
     }
 
@@ -126,7 +135,11 @@ public class ProjectService {
         checkAdminOrPM(project, currentUser);
         User userToAdd = findUserById(userId);
 
-        if (project.getTeamMembers().stream().noneMatch(member -> member.getId().equals(userId))) {
+        // --- FIX: Prevent adding if the ID is already present in the list ---
+        boolean alreadyMember = project.getTeamMembers().stream()
+                .anyMatch(member -> member.getId().equals(userId));
+
+        if (!alreadyMember) {
             project.getTeamMembers().add(userToAdd);
             createAndSaveNotification(
                     currentUser, userToAdd, project, null, NotificationType.generic,
@@ -264,11 +277,22 @@ public class ProjectService {
     }
 
     private void checkAdminOrPM(Project project, User currentUser) {
-        boolean isPM = project.getProjectManager() != null
+        // 1. Check if the user has the Global Role of Admin
+        boolean hasAdminRole = currentUser.getRole() == UserRole.admin;
+
+        // 2. Check if the user has the Global Role of Project Manager
+        boolean hasPMRole = currentUser.getRole() == UserRole.projectManager;
+
+        // 3. Check if they are the SPECIFIC PM assigned to this project
+        boolean isAssignedToThisProject = project.getProjectManager() != null
                 && project.getProjectManager().getId().equals(currentUser.getId());
-        boolean isAdmin = currentUser.getRole() == UserRole.admin;
-        if (!isPM && !isAdmin) {
-            throw new UnauthorizedException("User must be Project Manager or Admin for this action.");
+
+        // FIX: Allow if they are an Admin OR if they have the Project Manager role
+        // This allows a PM to edit projects even if they weren't the one assigned by
+        // the Admin
+        if (!hasAdminRole && !hasPMRole && !isAssignedToThisProject) {
+            throw new UnauthorizedException(
+                    "Access Denied: Only users with Project Manager or Admin roles can perform this action.");
         }
     }
 

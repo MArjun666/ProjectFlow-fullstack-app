@@ -1,24 +1,24 @@
 /* ProjectFlow: Aurora Theme - Consolidated Global Styles */
 :root {
   /* Aurora Theme Colors */
-  --bg-color: #0D0F18; /* Deep, dark navy blue */
-  --glass-bg: rgba(26, 30, 49, 0.65); /* Semi-transparent glass color */
-  --glass-border: rgba(122, 129, 153, 0.2); /* Subtle border for glass elements */
-  --primary-accent: #3A8DFF; /* Vibrant Electric Blue */
-  --secondary-accent: #C45FFF; /* Bright Magenta/Purple */
-  --success-accent: #33FFB5; /* Glowing Teal/Green */
-  --danger-accent: #FF558A; /* Neon Pink/Red */
-  --warning-accent: #FFD60A; /* Bright Yellow */
+  --bg-color: #0D0F18; 
+  --glass-bg: rgba(26, 30, 49, 0.65); 
+  --glass-border: rgba(122, 129, 153, 0.2); 
+  --primary-accent: #3A8DFF; 
+  --secondary-accent: #C45FFF; 
+  --success-accent: #33FFB5; 
+  --danger-accent: #FF558A; 
+  --warning-accent: #FFD60A; 
 
   /* Text Colors */
-  --text-primary: #F0F2FC; /* Almost white, very light gray */
-  --text-secondary: #A0A8C2; /* Lighter gray for subtitles */
-  --text-muted: #6A718A; /* Muted gray for less important info */
+  --text-primary: #F0F2FC; 
+  --text-secondary: #A0A8C2; 
+  --text-muted: #6A718A; 
 
   /* Standard Variables */
-  --border-radius: 12px;
-  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --border-radius: 16px; /* Increased from 12px for a softer look */
+  --card-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  --font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* Base Body Styles */
@@ -29,139 +29,138 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-color);
   color: var(--text-primary);
-  line-height: 1.6;
+  line-height: 1.7; /* Increased for better readability */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-  background-color: var(--glass-bg);
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
+/* --- FIX: REMOVE UNDERLINES NATIONWIDE --- */
+a, 
+a:hover, 
+a:visited, 
+a:active {
+  text-decoration: none !important; /* Force removal of underlines */
+  color: var(--primary-accent);
+  transition: all 0.3s ease;
 }
 
-/* Main App Layout (defined in App.js) */
+a:hover {
+  color: var(--secondary-accent);
+  opacity: 0.8;
+}
+
+/* Main App Layout */
 .app-layout {
   display: flex;
 }
 
 .main-content-area {
   flex-grow: 1;
-  padding-left: 80px; /* Space for the floating navbar */
+  padding-left: 100px; /* Increased space from the floating navbar */
+  padding-right: 40px; /* Added right padding for symmetry */
+  padding-top: 40px;   /* Added top padding */
   min-height: 100vh;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1300px; /* Slightly wider for modern screens */
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 3rem; /* Increased side padding for breathing room */
 }
 
 /* General Typographic Elements */
 .page-title {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 2.8rem;
+  font-weight: 800;
   color: var(--text-primary);
-  margin-bottom: 2rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: 3.5rem; /* More space below the title */
+  padding-bottom: 1rem;
   border-bottom: 1px solid var(--glass-border);
-}
-
-a {
-  color: var(--primary-accent);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-a:hover {
-  color: var(--secondary-accent);
-  text-decoration: underline;
+  letter-spacing: -0.5px;
 }
 
 /* Glassmorphism Card Style */
 .glass-card {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border-radius: var(--border-radius);
-  padding: 1.5rem;
+  padding: 2rem; /* Increased internal padding from 1.5rem */
   box-shadow: var(--card-shadow);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem; /* Increased margin between cards */
+  transition: border-color 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(58, 141, 255, 0.4);
 }
 
 /* Button Styles */
 .button-like {
-  padding: 10px 20px;
+  padding: 12px 24px; /* Slightly larger buttons */
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: none !important; /* No underlines on buttons */
   display: inline-block;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .button-like:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-3px); /* Slightly more pronounced hover lift */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
-.button-like:disabled {
-  background-color: var(--text-muted);
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-  opacity: 0.6;
-}
+
 .button-like.primary {
   background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
   color: white;
 }
-.button-like.danger {
-  background-color: var(--danger-accent);
-  color: white;
-}
-.button-like.warning {
-  background-color: var(--warning-accent);
-  color: #1a1a2e; /* Dark text on bright yellow */
-}
+
 .button-like.success {
-    background-color: var(--success-accent);
+    background: linear-gradient(135deg, var(--success-accent), #2CDA9D);
     color: var(--bg-color);
 }
-.button-like.secondary {
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--glass-border);
-}
-.button-like.secondary:hover {
-    background: var(--glass-bg);
-    color: var(--text-primary);
-    border-color: var(--primary-accent);
+
+/* --- SPACE AROUND TRACKING & PROJECT SECTIONS --- */
+/* This targets the grids used in DashboardPage and OrganizePage */
+.project-list-container, 
+.project-progress-grid,
+.project-cards-grid {
+    display: grid;
+    gap: 2.5rem !important; /* Forces more space between items */
+    margin-top: 1.5rem;
 }
 
 /* Global Form Styles */
-.form-group { margin-bottom: 1rem; }
+.form-group { 
+    margin-bottom: 1.8rem; /* More space between form fields */
+}
+
 label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    font-size: 0.95rem;
     color: var(--text-secondary);
 }
-input[type="text"], input[type="email"], input[type="password"],
-input[type="date"], textarea, select {
+
+input, textarea, select {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.9rem 1.2rem;
     border: 1px solid var(--glass-border);
-    border-radius: 6px;
-    background-color: rgba(13, 15, 24, 0.7);
+    border-radius: 10px;
+    background-color: rgba(13, 15, 24, 0.8);
     color: var(--text-primary);
     font-size: 1rem;
     box-sizing: border-box;
 }
+
 input:focus, textarea:focus, select:focus {
     outline: none;
     border-color: var(--primary-accent);
-    box-shadow: 0 0 15px rgba(58, 141, 255, 0.3);
+    box-shadow: 0 0 20px rgba(58, 141, 255, 0.25);
 }
 
 /* Global Error Message Style */
@@ -169,8 +168,9 @@ input:focus, textarea:focus, select:focus {
   color: var(--danger-accent);
   background-color: rgba(255, 85, 138, 0.1);
   border: 1px solid var(--danger-accent);
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 2rem;
   text-align: center;
+  font-weight: 500;
 }

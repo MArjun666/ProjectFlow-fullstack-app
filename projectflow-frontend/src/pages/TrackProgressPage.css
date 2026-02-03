@@ -51,23 +51,33 @@
     margin-bottom: 0.5rem;
     font-weight: 500;
 }
+
+/* FIX: Ensure container doesn't let the bar get out */
 .progress-bar-container {
     width: 100%;
-    background-color: var(--glass-border);
-    border-radius: 6px;
-    height: 20px;
-    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    height: 16px;
+    /* This is the most important line - it clips the green bar */
+    overflow: hidden !important; 
+    position: relative;
+    border: 1px solid var(--glass-border);
+    box-sizing: border-box;
 }
+
+/* FIX: Ensure bar behaves inside parent */
 .progress-bar {
     height: 100%;
     background-color: var(--success-accent);
+    /* Ensure the bar itself doesn't have sharp edges that poke out */
+    border-radius: 10px; 
+    transition: width 0.6s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--bg-color);
-    text-align: center;
-    line-height: 20px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    border-radius: 6px;
-    transition: width 0.5s ease-in-out;
+    font-size: 0.7rem;
+    font-weight: 800;
 }
 .progress-bar[style*="width: 0%"] { background-color: transparent; }
 
@@ -87,8 +97,12 @@
 }
 
 .expanded-project-details {
-    padding: 1.5rem;
+    padding: 2rem;
     border-top: 2px solid var(--primary-accent);
+    /* Prevents the whole card from leaking out of the dashboard */
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
 }
 .expanded-project-details h4 {
     margin-top: 0;
@@ -107,6 +121,9 @@
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--glass-border);
+    /* Ensure this item doesn't grow wider than the parent */
+    max-width: 100%; 
+    overflow: hidden;
 }
 .team-member-progress-item:last-child {
     border-bottom: none;
@@ -145,12 +162,16 @@
     font-size: 0.85rem;
     color: var(--text-secondary);
     margin-bottom: 0.5rem;
-    margin-left: 40px;
+    /* Align text with the progress bar */
+    margin-left: 45px; 
 }
 
 .small-progress-bar-container {
-    height: 16px;
-    margin-left: 40px;
+    height: 14px;
+    /* Pushes the bar in from the avatar space */
+    margin-left: 45px; 
+    /* Ensures the inner bar stays inside the rounded corners */
+    overflow: hidden !important; 
 }
 .small-progress-bar {
     line-height: 16px;

@@ -6,8 +6,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.slf4j.Logger; // <-- ADD THIS IMPORT
-import org.slf4j.LoggerFactory; // <-- ADD THIS IMPORT
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -15,12 +15,14 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 
+/**
+ * A utility class for handling JSON Web Token (JWT) operations,
+ * including generation, validation, and parsing.
+ */
 @Component
 public class JwtTokenProvider {
 
-    // --- THIS IS THE FIX ---
-    // A logger instance is declared for this class.
-    private static final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class);
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -28,40 +30,65 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration.ms}")
     private long jwtExpirationInMs;
 
+    /**
+     * Generates a new JWT for an authenticated user.
+     * 
+     * @param authentication The Spring Security authentication object.
+     * @return A signed JWT string.
+     */
     public String generateToken(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
+        User userPrincipal = (User) authentication.getPrincipal();
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
         return Jwts.builder()
-                .setSubject(user.getId())
-                .setIssuedAt(new Date())
+                .setSubject(userPrincipal.getId())
+                .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(key(), SignatureAlgorithm.HS256)
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
+    /**
+     * Parses a JWT to extract the user ID from its subject claim.
+     * 
+     * @param token The JWT string.
+     * @return The user ID.
+     */
     public String getUserIdFromJWT(String token) {
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key())
+                .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
     }
 
+    /**
+     * Validates a JWT's signature and expiration.
+     * 
+     * @param authToken The JWT string to validate.
+     * @return true if the token is valid, false otherwise.
+     */
     public boolean validateToken(String authToken) {
         try {
-            Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);
+            Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parse(authToken);
             return true;
         } catch (Exception ex) {
-            // Now that 'log' is defined, this line will work correctly.
-            log.error("JWT validation failed: {}", ex.getMessage());
+            logger.error("JWT validation failed: {}", ex.getMessage());
         }
         return false;
     }
 
-    private Key key() {
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+    /**
+     * This is the improved and recommended method for creating the signing key.
+     * It decodes the Base64 secret from application.properties into a secure Key
+     * object.
+     * 
+     * @return A cryptographic Key object for signing and validation.
+     */
+    private Key getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(this.jwtSecret);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 }

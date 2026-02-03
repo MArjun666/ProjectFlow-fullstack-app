@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api', // Use relative URL because of the proxy
+  // No need for http://localhost:5001 here, the proxy handles it
+  baseURL: '/api', 
 });
 
 api.interceptors.request.use(
@@ -15,9 +16,7 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 export default api;

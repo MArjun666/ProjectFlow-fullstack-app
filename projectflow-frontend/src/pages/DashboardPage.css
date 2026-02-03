@@ -1,15 +1,17 @@
 .dashboard-container-dark {
     width: 100%;
+    /* Pushes content away from the sidebar and edges */
+    padding: 1.5rem 3rem 2rem 1.5rem; 
+    box-sizing: border-box;
 }
 
 .dashboard-main-content-dark {
-    /* --- THIS IS THE KEY CHANGE --- */
     display: grid;
-    /* The projects section will be twice as wide as the messages section */
-    grid-template-columns: 2fr 1fr;
-    gap: 2.5rem; /* Space between the two columns */
+    /* Balanced columns to fit the large meter */
+    grid-template-columns: 1.6fr 1fr; 
+    gap: 4rem;
     margin-top: 2rem;
-    align-items: start; /* Aligns items to the top of the grid cell */
+    align-items: start;
 }
 
 .projects-section {
@@ -20,35 +22,19 @@
 .projects-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.projects-header h2 {
-    font-size: 1.75rem;
-    color: var(--text-primary);
-    margin: 0;
-    font-weight: 600;
-}
-
-.projects-header span {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+    align-items: baseline; /* Aligns "Projects" text with the date */
+    margin-bottom: 2.5rem;
 }
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-}
-
-.project-list-container {
-    margin-top: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+    margin-bottom: 2.5rem; /* Space between blue stats and projects */
 }
 
 .project-cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: 1fr; /* Cards stacked vertically */
+    gap: 1.5rem; /* Clean gap between smaller cards */
 }

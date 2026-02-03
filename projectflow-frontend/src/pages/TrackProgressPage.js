@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import './PageStyles.css';
 import './TrackProgressPage.css';
 
-// Memoized component for the expanded details section.
 const ExpandedProjectProgress = memo(({ projectId }) => {
   const [details, setDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,10 +31,20 @@ const ExpandedProjectProgress = memo(({ projectId }) => {
   if (error) return <p className="error-message">{error}</p>;
   if (!details) return null;
   
-  const allMembers = [
-      ...(details.projectManager ? [{...details.projectManager, isPM: true}] : []), 
-      ...details.teamMembers
-  ];
+  // FIX: Use a Map to filter unique users by their ID
+  const uniqueUsersMap = new Map();
+  
+  if (details.projectManager) {
+    uniqueUsersMap.set(details.projectManager._id, { ...details.projectManager, isPM: true });
+  }
+  
+  (details.teamMembers || []).forEach(member => {
+    if (!uniqueUsersMap.has(member._id)) {
+      uniqueUsersMap.set(member._id, member);
+    }
+  });
+
+  const allMembers = Array.from(uniqueUsersMap.values());
 
   const memberProgressData = allMembers.map(member => {
     const assignedTasks = (details.tasks || []).filter(task => task.assignedTo?._id === member._id);
@@ -66,7 +75,6 @@ const ExpandedProjectProgress = memo(({ projectId }) => {
   );
 });
 
-// Memoized component for displaying a single team member's progress.
 const TeamMemberProgress = memo(({ member }) => (
   <div className="team-member-progress-item">
     <div className="member-info">
